@@ -1,0 +1,18 @@
+<div class="container">
+  <div *ngFor="let item of items" class="card">
+    <div class="top-section">
+      <img src="{{item.image }}" alt="" height="99.5%" width="360" />
+    </div>
+    <div class="bottom-section">
+      <span>
+        <h3>Product No{{ items.indexOf(item) + 1 }}</h3>
+        <p class="text">{{item.description.slice(0, 50)}}</p>
+      </span>
+      <span class="bid-button">
+        <a routerLink="/item/{{ item._id }}">
+          <button (click)="onSelectedItem(item)">Bid Now</button>
+        </a>
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+.topbar-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+}
+
+.dash-container{
+    height: 100%;
+    /* background-color:#ECF9FF; */
+   
+}

@@ -1,0 +1,113 @@
+
+.container{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    padding-left: 30px;
+}
+
+.container .image{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 65%;
+    background-color: whitesmoke;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    
+}
+
+img{
+    border-radius: 10px;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    padding-top: 50px;
+    padding-right: 100px;
+    width: 23%;
+   
+}
+.content .bottom-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bid-button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bid-button button{
+    border: 0px;
+    height: 40px;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 20px;
+    background-color: lightgray;
+    color: white;
+
+}
+.bid-button button:focus{
+    border: 0px;
+    height: 40px;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 20px;
+    background-color: darkgray;
+    color: white;
+
+}
+.content  .details{
+
+    font-size: small;
+    font-weight: 250;
+}
+
+span p{
+    font-size: medium;
+    font-weight: 400;
+}
+
+.section-details{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    text-align: center;
+}
+.section-details p{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+}
+.link{
+    text-decoration: underline;
+}
+input[type='checkbox']{
+    align-self: center;
+}
+
+.min-bid-text {
+    margin-top: 0px;
+}
+
+h1{
+    margin-bottom: 5px;
+}
+
+.details-title{
+    font-weight: 700;
+}
+.link{
+    text-decoration: underline;
+    margin-left: 4px;
+}

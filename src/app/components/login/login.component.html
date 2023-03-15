@@ -1,0 +1,96 @@
+<div class="container-form">
+  <div class="box">
+    <div class="section">
+      <h2>Bidding Site</h2>
+      <span>Login with email and password</span>
+    </div>
+
+    <!-- {{ loginForm.value | json }} -->
+    <form #loginForm="ngForm" (ngSubmit)="getUserCredentials(loginForm)">
+      <div class="section">
+        <input
+          type="email"
+          name="email"
+          ngModel
+          #email="ngModel"
+          id="email"
+          placeholder="Email"
+          required
+        />
+        <span
+          *ngIf="email.invalid && email.touched"
+          style="
+            color: red;
+            padding-left: 10px;
+            margin-top: 0px;
+            font-size: smaller;
+            height: 25px;
+            border-radius: 5px;
+            width: 300px;
+            padding-top: 5px;
+            font-weight: bold;
+            opacity: 0.7;
+          "
+          >Enter valid email address</span
+        >
+      </div>
+
+      <div class="section">
+        <input
+          ngModel
+          type="password"
+          name="password"
+          #password="ngModel"
+          id="password"
+          placeholder="Password"
+          required
+        />
+        <span
+          *ngIf="password.invalid && password.touched"
+          style="
+            color: red;
+            padding-left: 10px;
+            margin-top: 0px;
+            font-size: smaller;
+            height: 25px;
+            border-radius: 5px;
+            width: 300px;
+            padding-top: 5px;
+            font-weight: bold;
+            opacity: 0.7;
+          "
+          >Enter valid password</span
+        >
+      </div>
+      <div
+        *ngIf="
+          password.invalid &&
+          email.invalid &&
+          password.untouched &&
+          email.untouched &&
+          loginForm.submitted
+        "
+        style="display: flex; flex-direction: row; justify-content: center; width: 100%;"
+      >
+        <span
+          style="
+            color: red;
+            padding-left: 10px;
+            margin-top: 0px;
+            font-size: smaller;
+            height: 25px;
+            border-radius: 5px;
+            width: 300px;
+            padding-top: 5px;
+            font-weight: bold;
+            opacity: 0.7;
+          "
+          >Enter valid email address and password to sign in</span
+        >
+      </div>
+      <div class="section">
+        <button type="submit">Sign in</button>
+      </div>
+    </form>
+  </div>
+</div>

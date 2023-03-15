@@ -1,0 +1,39 @@
+<div class="container" *ngIf="selectedItem">
+  <div class="image">
+    <img
+      src="{{ selectedItem.image }}"
+      alt="{{ selectedItem.name }}"
+      height="100%"
+      width="100%"
+    />
+  </div>
+  <div class="content">
+    <h1>Product Name: {{ selectedItem.name }}</h1>
+    <p class="min-bid-text">Minimum bid $10</p>
+    <section>
+      <p class="details-title">Details</p>
+      <p class="details">
+        {{selectedItem.description}}
+      </p>
+    </section>
+    <div class="bottom-section">
+      <span>
+        <p>Last bid made</p>
+        <h3>${{selectedItem.startBid}}</h3>
+      </span>
+      <span>
+        <p>Available until</p>
+        <h3>{{selectedItem.bidTime}}</h3>
+      </span>
+    </div>
+    <div class="bid-button">
+      <button>Place a bid</button>
+    </div>
+    <div class="section-details">
+      <p>
+        <input type="checkbox" name="autobidding" id="autobidding" />Activate
+        the <span class="link"> <a routerLink="/bid/{{selectedItem._id}}">auto-bidding</a> </span>
+      </p>
+    </div>
+  </div>
+</div>

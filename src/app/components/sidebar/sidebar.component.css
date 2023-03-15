@@ -1,0 +1,50 @@
+.nav-container{
+    padding-left: 20px;
+}
+
+.section{
+    margin-bottom: 40px;
+}
+
+.section p{
+    margin-bottom: 4px;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.section select{
+    width: 250px;
+    height: 40px;
+    font-size: 17px;
+    font-weight: 300;
+    background-color: whitesmoke;
+    border: 0px;
+}
+
+input[type='range']{
+      width: 250px;
+      --webkit-appearance: none;
+      appearance: none;
+      background-color: black;
+      height: 3px;
+
+      margin-top: -1px;   
+}
+
+.section ul{
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 0px;
+    
+}
+.section li{
+    margin-top: 8px;
+    
+}
+.bubble {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+  }

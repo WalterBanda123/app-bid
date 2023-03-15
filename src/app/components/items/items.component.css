@@ -1,0 +1,65 @@
+
+.container{
+    margin-top: 40px;
+    width: max-content;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 20px;
+    column-gap: 20px;
+    padding-left: 80px;
+    margin-bottom: auto;
+    overflow: auto;
+    float: none;
+    
+}
+
+.text{
+    margin-top: 0px;
+    font-weight: 200;
+    font-size: small;
+    max-lines: 2;
+}
+h3{
+    margin-bottom: 0px;
+}
+
+.container .card{
+    width: 360px;
+    height: 390px;
+    background-color: #E6E6E6;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.top-section{
+    height: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.top-section img{
+    border-radius: 15px;
+    border: 1px solid #E6E6E6 ;
+}
+
+.card .bottom-section{
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.card button{
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: lightgray;
+    border: 0px;
+    color: white;
+    font-weight: bolder;
+}

@@ -1,0 +1,27 @@
+
+.container-top-bar{
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom:20px;
+
+}
+.container-top-bar h1{
+    font-weight: bolder;
+    font-size: 40px;
+}
+
+.container-top-bar .second-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.material-icons{
+    font-size: 50px;
+    color: gray;
+}
