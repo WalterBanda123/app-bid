@@ -14,29 +14,53 @@
   </div>
   <div class="section">
     <p>Minimal bid</p>
-    <input type="range" name="minimal-bit" id="minimal-bit" min="0" max="1000" value="bid-value"/>
+    <input 
+      aria-valuetext="rangeValue.value"
+      type="range"
+      name="minimal-bit"
+      id="minimal-bit" 
+      min="0" 
+      [defaultValue]="rangeValue.value"
+      max="1000"
+      step="10" 
+      value="rangeValue.value"
+      #rangeValue 
+      (change)="getRangeValue(rangeValue.value)"/>
   </div>
-  <div class="section">
+  <div class="section" >
     <p>Category</p>
-    <ul>
-      <li>
-        <input type="checkbox" name="category1" id="category1" /> Category 01
-      </li>
-      <li>
-        <input type="checkbox" name="category2" id="category2" /> Category 02
-      </li>
-      <li>
-        <input type="checkbox" name="category3" id="category3" /> Category 03
-      </li>
-      <li>
-        <input type="checkbox" name="category4" id="category4" /> Category 04
-      </li>
-      <li>
-        <input type="checkbox" name="category5" id="category5" /> Category 05
-      </li>
-      <li>
-        <input type="checkbox" name="category6" id="category6" /> Category 06
-      </li>
-    </ul>
+      <ul >
+        <li>
+          <input  
+          #furniture 
+          type="checkbox" 
+          name="furniture" 
+          id="furniture" 
+          [checked]=""
+          (change)="shareState(furniture.checked, furniture.id)"
+          /> Furniture
+        </li>
+        <li>
+          <input 
+          type="checkbox" 
+          name="cutlery" 
+          #cutlery
+          id="cutlery"  
+          (change)="shareState(cutlery.checked, cutlery.id)"
+          /> Cutlery
+        </li>
+        <li>
+          <input type="checkbox" name="category3" id="category3" /> Category 03
+        </li>
+        <li>
+          <input type="checkbox" name="category4" id="category4" /> Category 04
+        </li>
+        <li>
+          <input type="checkbox" name="category5" id="category5" /> Category 05
+        </li>
+        <li>
+          <input type="checkbox" name="category6" id="category6" /> Category 06
+        </li>
+      </ul>
   </div>
 </nav>

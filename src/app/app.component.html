@@ -1,7 +1,4 @@
 <div class="dash-container" >
-  <div class="tobar-container">
-    <app-topbar *ngIf="authService.isLoggedIn$ | async"></app-topbar>
-  </div>
-  <router-outlet></router-outlet>
+  <!-- <app-login></app-login> -->
+  <div *ngIf="authService.isLoggedIn$ | async"><router-outlet></router-outlet></div>
 </div>
-<!-- <app-login></app-login> -->

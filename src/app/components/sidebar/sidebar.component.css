@@ -19,6 +19,7 @@
     font-weight: 300;
     background-color: whitesmoke;
     border: 0px;
+    position: relative;
 }
 
 input[type='range']{
@@ -27,8 +28,9 @@ input[type='range']{
       appearance: none;
       background-color: black;
       height: 3px;
-
-      margin-top: -1px;   
+      
+      margin-top: -1px;  
+      bottom: 0px; 
 }
 
 .section ul{
@@ -47,4 +49,14 @@ input[type='range']{
     height: 40px;
     background: white;
     border-radius: 50%;
+  }
+
+ .section #selector-value{
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    
+    top:0;
+    text-align: center;
+    background-color: aqua;
   }

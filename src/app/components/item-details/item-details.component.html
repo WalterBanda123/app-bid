@@ -1,3 +1,5 @@
+
+<app-topbar></app-topbar>
 <div class="container" *ngIf="selectedItem">
   <div class="image">
     <img
@@ -27,7 +29,7 @@
       </span>
     </div>
     <div class="bid-button">
-      <button>Place a bid</button>
+      <button (click)="bidItem()">Place a bid</button>
     </div>
     <div class="section-details">
       <p>

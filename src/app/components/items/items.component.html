@@ -1,5 +1,5 @@
-<div class="container">
-  <div *ngFor="let item of items" class="card">
+<div class="container" *ngIf="items.length > 0" >
+  <div  *ngFor="let item of items" class="card">
     <div class="top-section">
       <img src="{{item.image }}" alt="" height="99.5%" width="360" />
     </div>
@@ -15,4 +15,7 @@
       </span>
     </div>
   </div>
+</div>
+ <div id="empty-state" *ngIf="items.length === 0">
+    <h2>Nothing found!</h2>
 </div>

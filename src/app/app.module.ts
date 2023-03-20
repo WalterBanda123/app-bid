@@ -11,10 +11,11 @@ import { ItemsComponent } from './components/items/items.component';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
 import { AutoBiddingComponent } from './components/auto-bidding/auto-bidding.component';
 import { LoginComponent } from './components/login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from "@angular/forms"
-
+import { JwtModule } from "@auth0/angular-jwt";
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import {FormsModule} from "@angular/forms"
     ItemsComponent,
     ItemDetailsComponent,
     AutoBiddingComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,9 +34,16 @@ import {FormsModule} from "@angular/forms"
     BrowserAnimationsModule,
     HttpClientModule,
     MatFormFieldModule,
-    FormsModule
+    FormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('authenticatedUser'),
+      },
+    }),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
       this.authService.authUser(userCredentials?.value).subscribe((data: any) => {
         if (data.token) {
           this._userId = data._id;
+          this.authService.setToken(data.token)
         }
 
         this.user = this.users?.find((u: User) => u._id === this._userId);
@@ -48,6 +49,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.itemService.getUsers().subscribe((data: any) => {
       this.users = data.allUsers;
+     
+      
     });
     this.getUserCredentials();
   }

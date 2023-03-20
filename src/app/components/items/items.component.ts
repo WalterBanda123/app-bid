@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { CheckedService } from 'src/app/checked.service';
+import { ItemService } from './../../item.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { Item } from 'src/app/data/item';
-// import { cards } from 'src/app/data/cards';
-import { ItemService } from 'src/app/item.service';
+
 
 @Component({
   selector: 'app-items',
@@ -9,26 +10,56 @@ import { ItemService } from 'src/app/item.service';
   styleUrls: ['./items.component.css'],
 })
 export class ItemsComponent implements OnInit {
-  constructor(private itemService: ItemService) {}
+  constructor(
+    private itemService:ItemService,
+    private checkedService:CheckedService
+     ) { 
 
-
-
-  items: any;
-  ngOnInit() {
-  this.itemService
-      .getItems()
-      .subscribe((data) => {
-        this.items = data.items
-        console.log(data.message);
-        
-      });
-
-      console.log(this.items);
       
-  }
+   }
+  
+  items: any;
+ 
 
+  ngOnInit() {
+    this.itemService.getItems().subscribe((data: any) => {
+     
+      if(this.checkedService._checked$){
+
+        this.checkedService._checked$.subscribe((state) => {
   
+          if(state.state === false){
+            this.items = data.items;
+          }
+          if (state.state === true) {
+            this.items = data.items.filter(
+              (data: any) => data.category === state.text
+            );
+          }
+          
+          
+        });
+      }
+
+      if(this.checkedService._rangeValue$){
+        this.checkedService._rangeValue$.subscribe((value) => {
   
+          if(!value){
+            this.items = data.items;
+          }
+         
+            this.items = data.items.filter(
+              (data: any) => data.startBid <= value
+            );
+        })
+      }
+
+       this.items = data.items;
+    });
+  } 
+    
+  
+
   //--initialize  items viariable
 
   selectedItem?: Item;
