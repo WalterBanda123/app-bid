@@ -1,6 +1,7 @@
 
 import { AuthService } from 'src/app/auth.service';
 import { Injectable } from '@angular/core';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   HttpRequest,
   HttpHandler,
@@ -22,8 +23,8 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 }
 
-// export const AuthInterceptorProvider = {
-//   provide: HTTP_INTERCEPTORS,
-//   useClass: AuthInterceptor,
-//   multi: true,
-// };
+export const AuthInterceptorProvider = {
+  provide: HTTP_INTERCEPTORS,
+  useClass: AuthInterceptor,
+  multi: true,
+};

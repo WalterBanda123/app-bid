@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CheckedService {
-  private _checkedState = new Subject<{state:boolean, text:string}>();
+  private _checkedState = new BehaviorSubject<{state:boolean, text:string}>({state:false, text:''});
   _checked$ = this._checkedState.asObservable();
 
 
-  private _rangeValue = new Subject<Number>();
+  private _rangeValue = new BehaviorSubject<Number>(0);
   _rangeValue$ = this._rangeValue.asObservable();
 
 

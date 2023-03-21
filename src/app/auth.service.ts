@@ -31,7 +31,9 @@ export class AuthService {
   //---SETTING OUR TOKEN , so that we can GET it LATER FOR DECODING
   setToken(token: string) {
     this.tokenForLoggedUser = token;
+    
     this.loggedUserDetails = this.jwtHelperItem.decodeToken(token);
+
   }
   getToken() {
     return this.tokenForLoggedUser;

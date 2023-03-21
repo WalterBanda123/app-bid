@@ -33,8 +33,17 @@
     </div>
     <div class="section-details">
       <p>
-        <input type="checkbox" name="autobidding" id="autobidding" />Activate
-        the <span class="link"> <a routerLink="/bid/{{selectedItem._id}}">auto-bidding</a> </span>
+        <input
+         
+         type="checkbox" 
+         name="autobidding" 
+         id="autobidding" 
+         #autobidding 
+         (click)="autoBid()"
+         [checked]=isChecked
+         (change)="setAutoBidingHandler(autobidding.checked, selectedItem._id)"
+         />Activate
+        the <span class="link"> <a routerLink="/bid/{{selectedItem._id}}" >auto-bidding</a> </span>
       </p>
     </div>
   </div>

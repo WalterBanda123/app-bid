@@ -13,17 +13,33 @@
       </p>
     </div>
     <div class="section">
-      <input type="number" name="bid-amount" id="bid-amount" placeholder="$" >
+      <input 
+      type="number" 
+      name="bid-amount" 
+      id="bid-amount" 
+       placeholder={{currentAmount}}
+      [(ngModel)]="biddingAmount" 
+      [value]="currentAmount"
+      >
     </div>
     <div class="section">
         <h4>Bid Alert notification</h4>
         <p>Contrary to popular belief, Lorem Ipsum is not simply random text.</p>
     </div>
     <div class="section">
-        <input type="number" name="bid-alert" id="bid-alert" class="bit-alert" placeholder="%"/>
+        <input 
+        type="number" 
+        name="bid-alert" 
+        id="bid-alert" 
+        class="bit-alert" 
+        placeholder= {{currentPercentage}}%
+        [(ngModel)]="biddingPercentage"
+        [value]= currentPercentage
+        
+        />
     </div>
     <div class="section">
-        <button>Save</button>
+        <button  (click)="settingBiddingAmount()">Save</button>
     </div>
   </div>
 </div>
