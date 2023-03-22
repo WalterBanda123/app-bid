@@ -100,7 +100,6 @@ export class ItemDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getItems();
     this.getItem();
-    console.log(this.isChecked);
     // this.autoBid();
   }
 }

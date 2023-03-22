@@ -1,0 +1,99 @@
+
+.container{
+    width: 100%;
+    height: 100%;
+}
+
+.add-button{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    width: 100%;
+    justify-content: flex-end;
+    padding-right: 50px;
+}
+.add-button button{
+    width: 150px;
+    height: 50px;
+    border: 0px;
+    border-radius: 10px;
+    margin-right: 30px;
+}
+.items{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin-top: 30px;
+    flex-direction: column;
+}
+
+.items .item{
+    display: flex;
+    flex-direction: row;
+     height: 230px;
+     background-color: white;
+     margin-left: 15px;
+     margin-right: 15px;
+    margin-top: 10px;
+    
+}
+.item .image{
+    width: 200px;
+    height: 200px;
+    flex: 3;
+    margin-right: 10px;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-bottom: 10px;
+}
+.image img{
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.item-content{
+    display: flex;
+    flex-direction: row;
+    flex: 9;
+    padding: 0px;
+
+}
+.item-content .content{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+}
+.item-content .content .buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-right: 10px;
+
+}
+
+.buttons button{
+    width: 100px;
+    height: 40px;
+    border: 0px;
+    border-radius: 10px;
+}
+
+.buttons #edit{
+    background-color:black;
+    color: white;
+}
+.buttons #delete{
+    background-color: red;
+    color: white;
+}
+.content p{
+
+    font-weight: 200;
+    font-size: small;
+}

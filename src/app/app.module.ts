@@ -16,6 +16,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from "@angular/forms"
 import { JwtModule } from "@auth0/angular-jwt";
 import { AuthInterceptor } from './auth.interceptor';
+import { AdminComponent } from './components/admin/admin.component';
+import { AddItemComponent } from './components/add-item/add-item.component';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 @NgModule({
   declarations: [
@@ -27,6 +32,8 @@ import { AuthInterceptor } from './auth.interceptor';
     ItemDetailsComponent,
     AutoBiddingComponent,
     LoginComponent,
+    AdminComponent,
+    AddItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +47,7 @@ import { AuthInterceptor } from './auth.interceptor';
         tokenGetter: () => localStorage.getItem('authenticatedUser'),
       },
     }),
+    NgbModalModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
