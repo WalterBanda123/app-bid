@@ -18,16 +18,14 @@ export class ItemDetailsComponent implements OnInit {
     private autoBidService: AutoBidService
   ) {
     // this.autoBidState = {AutoBidActivated:'Checked',AutoBidDeactivated:'Unchecked'}
-    this.isChecked = localStorage.getItem('autoBidState')
+    this.isChecked = localStorage.getItem('autoBidState');
     console.log(this.isChecked);
-    
   }
 
   items: any;
   selectedItem?: Item;
-  isChecked?:any
-  checkedItemId:any
-
+  isChecked?: any;
+  checkedItemId: any;
 
   bidItem(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('itemID')!;
@@ -49,22 +47,20 @@ export class ItemDetailsComponent implements OnInit {
     ) {
       this.autoBidService._autoBidState$.subscribe((state) => {
         if (state.state === true) {
-          
-          localStorage.setItem('autoBidState', autoBidState.AutoBidActivated );
+          localStorage.setItem('autoBidState', autoBidState.AutoBidActivated);
 
           this.autoBidService._currentBidPrice$.subscribe((price) => {
-            price.price = price.price + 1.50;
- 
-            //SETTING UP THE CHECKED ITE ID
-            this.checkedItemId = state.text
+            price.price = price.price + 1.5;
 
-            this.autoBidService._biddingAmount$.subscribe((amount)=>{
+            //SETTING UP THE CHECKED ITE ID
+            this.checkedItemId = state.text;
+
+            this.autoBidService._biddingAmount$.subscribe((amount) => {
               // let reservedAmount = parseFloat(localStorage.getItem('myAmount')!);
-              amount.amount = amount.amount - 1.50;
+              amount.amount = amount.amount - 1.5;
               localStorage.setItem('myAmount', amount.amount.toString());
               console.log(amount);
-            })
-            
+            });
 
             this.itemService
               .updateItem(price.price, state.text)

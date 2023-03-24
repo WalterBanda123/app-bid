@@ -12,14 +12,12 @@ import { ItemDetailsComponent } from './components/item-details/item-details.com
 import { AutoBiddingComponent } from './components/auto-bidding/auto-bidding.component';
 import { LoginComponent } from './components/login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {FormsModule} from "@angular/forms"
-import { JwtModule } from "@auth0/angular-jwt";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { JwtModule } from '@auth0/angular-jwt';
 import { AuthInterceptor } from './auth.interceptor';
 import { AdminComponent } from './components/admin/admin.component';
 import { AddItemComponent } from './components/add-item/add-item.component';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-
 
 
 @NgModule({
@@ -47,7 +45,6 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
         tokenGetter: () => localStorage.getItem('authenticatedUser'),
       },
     }),
-    NgbModalModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -1,4 +1,3 @@
-
 <app-topbar></app-topbar>
 <div class="container" *ngIf="selectedItem">
   <div class="image">
@@ -15,17 +14,17 @@
     <section>
       <p class="details-title">Details</p>
       <p class="details">
-        {{selectedItem.description}}
+        {{ selectedItem.description }}
       </p>
     </section>
     <div class="bottom-section">
       <span>
         <p>Last bid made</p>
-        <h3>${{selectedItem.startBid}}</h3>
+        <h3>${{ selectedItem.startBid }}</h3>
       </span>
       <span>
         <p>Available until</p>
-        <h3>{{selectedItem.bidTime}}</h3>
+        <h3>{{ selectedItem.bidTime }}</h3>
       </span>
     </div>
     <div class="bid-button">
@@ -34,16 +33,17 @@
     <div class="section-details">
       <p>
         <input
-         
-         type="checkbox" 
-         name="autobidding" 
-         id="autobidding" 
-         #autobidding 
-         (click)="autoBid()"
-         [checked]=isChecked
-         (change)="setAutoBidingHandler(autobidding.checked, selectedItem._id)"
-         />Activate
-        the <span class="link"> <a routerLink="/bid/{{selectedItem._id}}" >auto-bidding</a> </span>
+          type="checkbox"
+          name="autobidding"
+          id="autobidding"
+          #autobidding
+          (click)="autoBid()"
+          [checked]="isChecked"
+          (change)="setAutoBidingHandler(autobidding.checked, selectedItem._id)"
+        />Activate the
+        <span class="link">
+          <a routerLink="/bid/{{ selectedItem._id }}">auto-bidding</a>
+        </span>
       </p>
     </div>
   </div>

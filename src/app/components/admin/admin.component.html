@@ -1,29 +1,38 @@
+<app-topbar></app-topbar>
+<div class="container" >
+  <div class="add-button">
+   
+    <button type="button" (click)="addNewItem()">
+      Add product</button>
+  </div>
+  <div class="items">
+    <div class="item" *ngFor="let item of allItems">
+      <span class="image">
+        <img
+          src="{{ item.image }}"
+          alt="{{ item.name }}"
+          height="200"
+          width="200"
+        />
+      </span>
+      <span class="item-content">
+        <div class="content">
+          <span>
+            <h1>Product NO#: {{ allItems.indexOf(item) + 1 }}</h1>
+            <h2>Item Price:$ {{ item.startBid }}</h2>
+            <p>{{ item.description.slice(0, 250) }}...</p>
+          </span>
+          <span class="buttons">
+            <button id="edit" type="button">Edit</button>
+            <button id="delete" type="button" (click)="deleteItem(item._id)">
+              Delete
+            </button>
+          </span>
+        </div>
+      </span>
+    </div>
+    <hr />
+  </div>
 
-<!-- <app-topbar></app-topbar> -->
-<div class="container">
-    <div class="add-button">
-        <button>Add product</button>
-    </div>
-    <div class="items" >
-     <div class="item" *ngFor="let item of allItems">
-        <span class="image">
-            <img src="{{item.image}}" alt="{{item.name}}" height="200" width="200"/>
-        </span>
-        <span class="item-content">
-            <div class="content">
-                <span>
-                    <h1>Product NO#: {{allItems?.indexOf(item)+1}}</h1>
-                    <h2>Item Price:$ {{item.startBid}}</h2>
-                    <p>{{item.description.slice(0,250)}}...</p>
-                </span>
-                <span class="buttons">
-                    <button id="edit">Edit </button>
-                    <button id="delete" (click)="open()">Delete</button>
-                </span>
-            </div>
-        </span>
-     </div>
-     <hr>
-     
-    </div>
+ 
 </div>

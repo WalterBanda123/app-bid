@@ -8,12 +8,23 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
 import { LoginComponent } from './components/login/login.component';
 import { IsAuthenticatedGuard } from './is-authenticated.guard';
+import { AdminComponent } from './components/admin/admin.component';
+import { AddItemComponent } from './components/add-item/add-item.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+
+    path:'add-item',
+    component:AddItemComponent
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
   },
   {
     path: 'dashboard',

@@ -1,1 +1,18 @@
-<p>add-item works!</p>
+
+<div class="container">
+  <div class="content">
+    
+    <form  method="post"  #addItemForm="ngForm" (ngSubmit)="addItem(addItemForm)">
+        <div class="input-field" >
+            <h2>Add New Item*</h2>
+            <input required   ngModel class="inputs" type="text" name="itemName" id="itemName" #itemName="ngModel"  placeholder="Item Name">
+            <input required   ngModel class="inputs" type="number" name="startBid" id="startBid" #startBid="ngModel"  placeholder="Starting bid">
+            <input required  ngModel class="inputs" type="time" name="bidTime" id="bidTime" #bidTime="ngModel"  placeholder="Bid time">
+            <input required  ngModel class="inputs" type="text" name="description" id="description" #description="ngModel"  placeholder="Description">
+            <input required  ngModel class="inputs" type="text" name="category" id="category" #category="ngModel" placeholder="Category">
+            <input required type="file" class="buttons" accept="image/*" placeholder="pick image">
+            <button type="submit" class="buttons" id="save" placeholder="Save" >Save</button>
+        </div>
+    </form>
+  </div>
+</div>

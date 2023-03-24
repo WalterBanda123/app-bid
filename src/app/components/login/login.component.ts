@@ -36,8 +36,14 @@ export class LoginComponent implements OnInit {
         }
 
         this.user = this.users?.find((u: User) => u._id === this._userId);
-        if (this.user) {
-          this.router.navigate([`dashboard`]);
+        if(this.user){
+          if (this.user?.role === 'Admin') {
+            this.router.navigate([`admin`]);
+          }
+          else{
+            this.router.navigate([`dashboard`]);
+          }
+
         }
         console.log(`${this.user?.fullName} HAS LOGGED IN...`);
       });

@@ -52,8 +52,8 @@ export class ItemService {
   }
 
   //---Logging user ----
- 
-  getUser(credentials: { email: string, password: string } ): Observable<User> {
+
+  getUser(credentials: { email: string; password: string }): Observable<User> {
     return this.http
       .post<User>(this.serverUrl + 'users/login', credentials)
       .pipe(catchError(this.handleError));
@@ -65,16 +65,32 @@ export class ItemService {
       .pipe(catchError(this.handleError));
   }
 
-  getLoggedUser(userId:string): Observable<User>{
-    return this.http.get<User>(this.serverUrl + `users/${userId}`)
-    .pipe(catchError(this.handleError))
+  getLoggedUser(userId: string): Observable<User> {
+    return this.http
+      .get<User>(this.serverUrl + `users/${userId}`)
+      .pipe(catchError(this.handleError));
   }
 
-  
-  updateItem(bidPrice:Number, itemId:string):Observable<Item|any>{
-    return this.http.patch<Item>(this.serverUrl + `items/${itemId}`, {newBid:bidPrice})
-    .pipe(catchError(this.handleError))
+  updateItem(bidPrice: Number, itemId: string): Observable<Item | any> {
+    return this.http
+      .patch<Item>(this.serverUrl + `items/${itemId}`, { newBid: bidPrice })
+      .pipe(catchError(this.handleError));
+  }
 
-  }  
-  
+  createItem(newItem: {
+    name: string;
+    startBid: number;
+    bidTime: string;
+    image: string;
+    description: string;
+    category: string;
+  }): Observable<Item | any> {
+    return this.http.post<Item>(this.serverUrl + `items`, newItem);
+  }
+
+  deleteItem(itemId: string): Observable<Item> {
+    return this.http
+      .delete<Item>(this.serverUrl + `items/${itemId}`)
+      .pipe(catchError(this.handleError));
+  }
 }
