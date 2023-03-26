@@ -4,7 +4,8 @@
   </div>
   <div class="section">
     <p>Arrange</p>
-    <select name="filter" id="filter">
+    <select
+     name="filter" id="filter">
       <optgroup>
         <option value="popular">Popular</option>
         <option value="recent">Recent</option>
@@ -20,10 +21,11 @@
       name="minimal-bit"
       id="minimal-bit" 
       min="0" 
-      [defaultValue]="rangeValue.value"
+      
       max="1000"
       step="10" 
       value="rangeValue.value"
+      matTooltip = "rangeValue.value"
       #rangeValue 
       (change)="getRangeValue(rangeValue.value)"/>
   </div>

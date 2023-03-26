@@ -1,4 +1,9 @@
 
+
+#logout{
+    background-color: transparent;
+    border: 0px;
+}
 .container-top-bar{
     display: flex;
     flex-direction: row;

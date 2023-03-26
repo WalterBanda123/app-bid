@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ItemService } from './item.service';
 import { tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,8 @@ export class AuthService {
 
   constructor(
     private itemService: ItemService,
-    private jwtHelperItem: JwtHelperService
+    private jwtHelperItem: JwtHelperService,
+    private router: Router
   ) {
     // const token = localStorage.getItem('authenticatedUser');
     this._isLoggedIn$.next(!!this.token);
@@ -31,9 +33,8 @@ export class AuthService {
   //---SETTING OUR TOKEN , so that we can GET it LATER FOR DECODING
   setToken(token: string) {
     this.tokenForLoggedUser = token;
-    
-    this.loggedUserDetails = this.jwtHelperItem.decodeToken(token);
 
+    this.loggedUserDetails = this.jwtHelperItem.decodeToken(token);
   }
   getToken() {
     return this.tokenForLoggedUser;
@@ -51,5 +52,10 @@ export class AuthService {
         this._isLoggedIn$.next(true);
       })
     );
+  }
+
+  logOut() {
+    localStorage.removeItem(this.TOKEN_NAME);
+    this.router.navigateByUrl('/login');
   }
 }

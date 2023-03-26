@@ -2,10 +2,10 @@
   <span>
     <h1>Logo</h1>
   </span>
-  <span
-  class="second-container"
-  >
-    <p *ngIf="actualUserData.fullName">{{actualUserData.fullName}}</p>
-    <i class="material-icons">account_circle</i
-  ></span>
+  <span class="second-container" (click)="LogOut()"
+    ><button type="button" id="logout" class="second-container">
+      <p *ngIf="actualUserData.fullName">{{ actualUserData.fullName }}</p>
+      <i class="material-icons">account_circle</i>
+    </button>
+  </span>
 </div>

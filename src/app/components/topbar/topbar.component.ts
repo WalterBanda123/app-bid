@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth.service';
-import { User } from 'src/app/data/user';
 import { ItemService } from 'src/app/item.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-topbar',
@@ -11,7 +12,8 @@ import { ItemService } from 'src/app/item.service';
 export class TopbarComponent {
   constructor(
     private itemService: ItemService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog:MatDialog
   ) {}
 
   userData: any;
@@ -19,31 +21,31 @@ export class TopbarComponent {
   usersList?: any;
 
   // getActualUser() {
-//  this.userData = this.authService.getUserWhoIsLogged();
-//     this.userData && this.authService.isLoggedIn$
+  //  this.userData = this.authService.getUserWhoIsLogged();
+  //     this.userData && this.authService.isLoggedIn$
 
-//       this.actualUserData = this.usersList?.find(
-//         (u: any) => u._id === this.userData.userId
-//       );
-//       console.log(
-//         'actual user data ,data to be displayed',
-//         this.actualUserData
-//       );
-//       console.log('the logged user', this.userData);
-//   // }
+  //       this.actualUserData = this.usersList?.find(
+  //         (u: any) => u._id === this.userData.userId
+  //       );
+  //       console.log(
+  //         'actual user data ,data to be displayed',
+  //         this.actualUserData
+  //       );
+  //       console.log('the logged user', this.userData);
+  //   // }
 
-  async getLoggedUser() {
-   
+
+
+  LogOut(): void {
+    this.dialog.open(DialogComponent)
+    // this.authService.logOut()
   }
 
   ngOnInit(): void {
-
     // this.itemService.getItems();
     this.itemService.getUsers().subscribe((data: any) => {
-       data;
-      
-      
-    
+      data;
+
       if (
         // this.authService.isLoggedIn$ &&
         this.authService.token
@@ -60,16 +62,6 @@ export class TopbarComponent {
 
         // console.log('the logged user', this.userData);
       }
-       
-    
     });
-
-    
-
-
-
-    }
-
-  
-  
+  }
 }

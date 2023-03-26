@@ -1,9 +1,7 @@
 <app-topbar></app-topbar>
-<div class="container" >
+<div class="container">
   <div class="add-button">
-   
-    <button type="button" (click)="addNewItem()">
-      Add product</button>
+    <button type="button" (click)="addNewItem()">Add product</button>
   </div>
   <div class="items">
     <div class="item" *ngFor="let item of allItems">
@@ -18,12 +16,12 @@
       <span class="item-content">
         <div class="content">
           <span>
-            <h1>Product NO#: {{ allItems.indexOf(item) + 1 }}</h1>
+            <h1>Product NO#: {{ allItems.indexOf(item) + 1}}</h1>
             <h2>Item Price:$ {{ item.startBid }}</h2>
             <p>{{ item.description.slice(0, 250) }}...</p>
           </span>
           <span class="buttons">
-            <button id="edit" type="button">Edit</button>
+            <button id="edit" type="button" routerLink="/edit/{{item._id}}">Edit</button>
             <button id="delete" type="button" (click)="deleteItem(item._id)">
               Delete
             </button>
@@ -33,6 +31,4 @@
     </div>
     <hr />
   </div>
-
- 
 </div>

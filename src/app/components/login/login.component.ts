@@ -30,15 +30,20 @@ export class LoginComponent implements OnInit {
 
     try {
       this.authService.authUser(userCredentials?.value).subscribe((data: any) => {
+        console.log();
+        
         if (data.token) {
           this._userId = data._id;
           this.authService.setToken(data.token)
+          
+          
         }
 
         this.user = this.users?.find((u: User) => u._id === this._userId);
         if(this.user){
           if (this.user?.role === 'Admin') {
             this.router.navigate([`admin`]);
+             
           }
           else{
             this.router.navigate([`dashboard`]);
@@ -56,8 +61,11 @@ export class LoginComponent implements OnInit {
     this.itemService.getUsers().subscribe((data: any) => {
       this.users = data.allUsers;
      
+     
       
     });
     this.getUserCredentials();
+    console.log(this.users);
+    
   }
 }

@@ -18,6 +18,9 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AuthInterceptor } from './auth.interceptor';
 import { AdminComponent } from './components/admin/admin.component';
 import { AddItemComponent } from './components/add-item/add-item.component';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { EditItemComponent } from './components/edit-item/edit-item.component';
 
 
 @NgModule({
@@ -32,7 +35,10 @@ import { AddItemComponent } from './components/add-item/add-item.component';
     LoginComponent,
     AdminComponent,
     AddItemComponent,
+    DialogComponent,
+    EditItemComponent,
   ],
+  entryComponents:[DialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -45,6 +51,7 @@ import { AddItemComponent } from './components/add-item/add-item.component';
         tokenGetter: () => localStorage.getItem('authenticatedUser'),
       },
     }),
+    MatDialogModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
