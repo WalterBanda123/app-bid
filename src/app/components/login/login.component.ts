@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
           }
 
         }
+        
         console.log(`${this.user?.fullName} HAS LOGGED IN...`);
       });
     } catch (error) {

@@ -13,7 +13,7 @@ export class AutoBidService {
   _currentBidPrice$ = this._currentBidPrice.asObservable();
 
 
-public _biddingAmount = new BehaviorSubject<{amount: number}>({amount:0});
+public _biddingAmount = new Subject<{amount: number}>();
 _biddingAmount$ = this._biddingAmount.asObservable();
 
 

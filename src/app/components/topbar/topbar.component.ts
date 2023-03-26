@@ -28,7 +28,6 @@ export class TopbarComponent {
 
   getUserData() {
     const data = localStorage.getItem('loggedUser');
-    console.log(data);
 
     if (data) {
       this.actualUserData = JSON.parse(data);
@@ -52,8 +51,9 @@ export class TopbarComponent {
         localStorage.setItem('loggedUser', JSON.stringify(user));
 
         const latestUser = localStorage.getItem('loggedUser');
-        console.log(latestUser);
+        // console.log(latestUser);
         if (latestUser) {
+         
           this.actualUserData = JSON.parse(latestUser);
         }
       }

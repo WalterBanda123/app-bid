@@ -27,11 +27,11 @@ export class LoginGuard implements CanActivate, CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log(
-      this.authService.isLoggedIn$.subscribe((value) =>
-        console.log('The value is ', value)
-      )
-    );
+    // console.log(
+    //   this.authService.isLoggedIn$.subscribe((value) =>
+    //     console.log('The value is ', value)
+    //   )
+    // );
 
     return this.authService.isLoggedIn$.pipe(
       tap((isLoggedIn)=>{

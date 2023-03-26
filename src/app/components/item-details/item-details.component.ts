@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { Item } from 'src/app/data/item';
 // import { cards } from 'src/app/data/cards';
 
@@ -11,7 +11,7 @@ import { AutoBidService } from 'src/app/auto-bid.service';
   templateUrl: './item-details.component.html',
   styleUrls: ['./item-details.component.css'],
 })
-export class ItemDetailsComponent implements OnInit {
+export class ItemDetailsComponent implements OnInit, DoCheck {
   constructor(
     private activatedRoute: ActivatedRoute,
     private itemService: ItemService,
@@ -19,7 +19,35 @@ export class ItemDetailsComponent implements OnInit {
   ) {
     // this.autoBidState = {AutoBidActivated:'Checked',AutoBidDeactivated:'Unchecked'}
     this.isChecked = localStorage.getItem('autoBidState');
-    console.log(this.isChecked);
+
+    console.log(
+      autoBidService._currentBidPrice$.subscribe((state) => console.log(state))
+    );
+  }
+
+  ngDoCheck(): void {
+    // this.autoBid()
+    if (
+      this.isChecked 
+    ) {
+      console.log(this.isChecked);
+      
+      this.autoBidService._autoBidState$.subscribe((data) => {
+        const priceSet = parseInt(JSON.parse(localStorage.getItem('price')!));
+        console.log(priceSet);
+        
+        
+          this.autoBidService._currentBidPrice$.subscribe((price) => {
+            if (priceSet !== price.price) {
+              const newPrice = price.price + 1.5;
+              this.itemService
+                .autoBidItem(data.text, newPrice)
+                .subscribe((data) => console.log(data));
+            }
+          });
+        
+      });}
+
   }
 
   items: any;
@@ -33,45 +61,45 @@ export class ItemDetailsComponent implements OnInit {
     this.itemService
       .updateItem(new_price, id)
       .subscribe((data: any) => console.log(data));
+
+    localStorage.setItem('price', JSON.stringify(new_price));
   }
 
   autoBid() {
-    const autoBidState: any = {
-      AutoBidActivated: 'Checked',
-      AutoBidDeactivated: 'Unchecked',
-    };
-
     if (
-      this.autoBidService._autoBidState$ &&
-      this.autoBidService._currentBidPrice$
+      this.isChecked 
     ) {
-      this.autoBidService._autoBidState$.subscribe((state) => {
-        if (state.state === true) {
-          localStorage.setItem('autoBidState', autoBidState.AutoBidActivated);
-
+      console.log(this.isChecked);
+      
+      this.autoBidService._autoBidState$.subscribe((data) => {
+        const priceSet = parseInt(JSON.parse(localStorage.getItem('price')!));
+        console.log(priceSet);
+        
+        
           this.autoBidService._currentBidPrice$.subscribe((price) => {
-            price.price = price.price + 1.5;
-
-            //SETTING UP THE CHECKED ITE ID
-            this.checkedItemId = state.text;
-
-            this.autoBidService._biddingAmount$.subscribe((amount) => {
-              // let reservedAmount = parseFloat(localStorage.getItem('myAmount')!);
-              amount.amount = amount.amount - 1.5;
-              localStorage.setItem('myAmount', amount.amount.toString());
-              console.log(amount);
-            });
-
-            this.itemService
-              .updateItem(price.price, state.text)
-              .subscribe((data: any) =>
-                console.log('data with new price new price', data)
-              );
+            if (priceSet !== price.price) {
+              const newPrice = price.price + 1.5;
+              this.itemService
+                .autoBidItem(data.text, newPrice)
+                .subscribe((data) => console.log(data));
+            }
           });
-        }
+        
       });
+
+      //   price.price += 1.5;
+      //   this.autoBidService.setBidPrice(price.price)
+      //   const autoBidDetails = JSON.parse(localStorage.getItem('autoBid')!);
+      //   autoBidDetails['bid-amount'] -= 1.5;
+
+      //   console.log(price.price);
+
+      //   console.log(autoBidDetails);
+
+      //   localStorage.setItem('autoBid', autoBidDetails)
+      //     return price.price
+      // });
     }
-    localStorage.setItem('autoBidState', autoBidState.AutoBidDeactivated);
   }
 
   getItem(): void {
@@ -96,6 +124,7 @@ export class ItemDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getItems();
     this.getItem();
+    this.autoBid()
     // this.autoBid();
   }
 }

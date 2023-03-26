@@ -78,7 +78,11 @@ export class ItemService {
     bidTime?: string
   ): Observable<Item | any> {
     return this.http
-      .patch<Item>(this.serverUrl + `items/${itemId}`, { newBid: bidPrice , category, bidTime})
+      .patch<Item>(this.serverUrl + `items/${itemId}`, {
+        newBid: bidPrice,
+        category,
+        bidTime,
+      })
       .pipe(catchError(this.handleError));
   }
 
@@ -96,6 +100,12 @@ export class ItemService {
   deleteItem(itemId: string): Observable<Item> {
     return this.http
       .delete<Item>(this.serverUrl + `items/${itemId}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  autoBidItem(itemId: string, newBidPrice: number): Observable<Item> {
+    return this.http
+      .patch<Item>(this.serverUrl + `items/setBid/${itemId}`, { newBidPrice })
       .pipe(catchError(this.handleError));
   }
 }

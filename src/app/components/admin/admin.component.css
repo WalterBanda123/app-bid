@@ -97,3 +97,9 @@
     font-weight: 200;
     font-size: small;
 }
+
+#add-button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

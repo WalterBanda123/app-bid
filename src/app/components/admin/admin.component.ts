@@ -1,7 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ItemService } from 'src/app/item.service';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 
 // import { data } from 'src/app/data/cards';
 
@@ -9,51 +11,45 @@ import { ItemService } from 'src/app/item.service';
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class AdminComponent implements OnInit {
   constructor(
     private itemService: ItemService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private router:Router
-  ) {}
-
-  // allItems:any= data;
-  allItems?: any;
-
-  deleteItem(itemId: string) {
-    this.itemService.deleteItem(itemId).subscribe((res) => {
-      console.log('item id deleted', res._id);
-      setTimeout(() => {
-        this.allItems;
-        this.changeDetectorRef.detectChanges();
-        this.allItems;
-
-        console.log(this.changeDetectorRef.detectChanges());
-        
-      }, 1000);
-    });
+    private router: Router,
+    private dialog: MatDialog,
+    private detecteChanges:ChangeDetectorRef
+  ) {
   }
 
+  // allItems:any= data;
+  allItems?:any ;
 
-  addNewItem(){
-    this.router.navigate(['add-item'])
+  deleteItem(itemId: string) {
+     this.dialog.open(DeleteDialogComponent, {
+      data: { _id: itemId },
+    });
+
+    // dialogRef.afterClosed().subscribe((state) => {
+    //   if (state === true) {
+    //     this.itemService.getItems().subscribe((data) => {
+    //       this.allItems = [...data.items] ;
+    //       this.detecteChanges.markForCheck()
+    //     });
+        
+    //   }
+    // });
+  }
+
+  addNewItem() {
+    this.router.navigate(['add-item']);
     console.log('navigated to the add item page');
-    
   }
 
   ngOnInit(): void {
-    //  this.getItems()
-    this.itemService.getItems().subscribe((data: any) => {
-      this.allItems = data.items;
-      console.log('my items', data.items);
+   this.itemService.getItems().subscribe((data: any) => {
+      this.allItems = [...data.items]
+      this.detecteChanges.markForCheck()
     });
   }
-
-  // openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-  //   this.dialog.open(DialogComponent, {
-  //     width: '250px',
-  //     enterAnimationDuration,
-  //     exitAnimationDuration,
-  //   });
-  // }
 }

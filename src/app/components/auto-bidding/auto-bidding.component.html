@@ -12,34 +12,42 @@
         Finibus Bonorum et Malorum" by Cicero are also
       </p>
     </div>
-    <div class="section">
-      <input 
-      type="number" 
-      name="bid-amount" 
-      id="bid-amount" 
-       placeholder={{currentAmount}}
-      [(ngModel)]="biddingAmount" 
-      [value]="currentAmount"
-      >
-    </div>
-    <div class="section">
-        <h4>Bid Alert notification</h4>
-        <p>Contrary to popular belief, Lorem Ipsum is not simply random text.</p>
-    </div>
-    <div class="section">
+    <form #autoBidding="ngForm" method="post" (ngSubmit)="settingBiddingAmount(autoBidding)">
+      <div class="section">
+
+        <label for="bid-amount">Auto Bid Budget</label>
         <input 
         type="number" 
-        name="bid-alert" 
-        id="bid-alert" 
-        class="bit-alert" 
-        placeholder= {{currentPercentage}}%
-        [(ngModel)]="biddingPercentage"
-        [value]= currentPercentage
-        
-        />
-    </div>
-    <div class="section">
-        <button  (click)="settingBiddingAmount()">Save</button>
-    </div>
+        name="bid-amount" 
+        id="bid-amount" 
+        placeholder= "$ {{currentAmountBudget}}"
+        ngModel
+        #currentAmount ="ngModel" 
+        [value]="currentAmountBudget"
+        >
+      </div>
+      <div class="section">
+          <h4>Bid Alert notification</h4>
+          <p>Contrary to popular belief, Lorem Ipsum is not simply random text.</p>
+      </div>
+      <label for="bid-alert">Percentage</label>
+      <div class="section">
+          <input 
+          
+          type="number" 
+          name="bid-alert" 
+          id="bid-alert" 
+          class="bit-alert"
+          ngModel
+          #currentBidPercentage ="ngModel" 
+          placeholder= "{{currentPercentageSet}} %" 
+          [value]="currentPercentageSet"
+          />
+      </div>
+      <div class="section">
+          <button  type="submit">Save</button>
+      </div>
+
+    </form>
   </div>
 </div>
