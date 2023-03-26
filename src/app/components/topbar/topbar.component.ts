@@ -13,32 +13,26 @@ export class TopbarComponent {
   constructor(
     private itemService: ItemService,
     private authService: AuthService,
-    private dialog:MatDialog
+    private dialog: MatDialog
   ) {}
 
   userData: any;
   actualUserData?: any;
   usersList?: any;
 
-  // getActualUser() {
-  //  this.userData = this.authService.getUserWhoIsLogged();
-  //     this.userData && this.authService.isLoggedIn$
-
-  //       this.actualUserData = this.usersList?.find(
-  //         (u: any) => u._id === this.userData.userId
-  //       );
-  //       console.log(
-  //         'actual user data ,data to be displayed',
-  //         this.actualUserData
-  //       );
-  //       console.log('the logged user', this.userData);
-  //   // }
-
-
-
   LogOut(): void {
-    this.dialog.open(DialogComponent)
+    this.dialog.open(DialogComponent);
+    localStorage.removeItem('loggedUser');
     // this.authService.logOut()
+  }
+
+  getUserData() {
+    const data = localStorage.getItem('loggedUser');
+    console.log(data);
+
+    if (data) {
+      this.actualUserData = JSON.parse(data);
+    }
   }
 
   ngOnInit(): void {
@@ -51,17 +45,19 @@ export class TopbarComponent {
         this.authService.token
       ) {
         this.userData = this.authService.getUserWhoIsLogged();
-        this.actualUserData = data.allUsers.find(
+
+        const user = data.allUsers.find(
           (u: any) => u._id === this.userData.userId
         );
-        // console.log(
-        //   'actual user data ,data to be displayed',
-        //   this.actualUserData
-        // );
-        // console.log('users pechi two', this.usersList);
+        localStorage.setItem('loggedUser', JSON.stringify(user));
 
-        // console.log('the logged user', this.userData);
+        const latestUser = localStorage.getItem('loggedUser');
+        console.log(latestUser);
+        if (latestUser) {
+          this.actualUserData = JSON.parse(latestUser);
+        }
       }
     });
+    this.getUserData()
   }
 }
