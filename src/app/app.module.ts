@@ -22,6 +22,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditItemComponent } from './components/edit-item/edit-item.component';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
+import { MessageComponent } from './components/message/message.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.
     DialogComponent,
     EditItemComponent,
     DeleteDialogComponent,
+    MessageComponent,
   ],
   entryComponents:[DialogComponent],
   imports: [

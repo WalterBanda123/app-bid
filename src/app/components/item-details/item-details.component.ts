@@ -1,10 +1,14 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { Item } from 'src/app/data/item';
+import { MatDialog } from '@angular/material/dialog';
 // import { cards } from 'src/app/data/cards';
 
 import { ItemService } from 'src/app/item.service';
 import { ActivatedRoute } from '@angular/router';
 import { AutoBidService } from 'src/app/auto-bid.service';
+import { MessagesService } from 'src/app/messages.service';
+import { MessageComponent } from '../message/message.component';
+
 
 @Component({
   selector: 'app-item-details',
@@ -15,39 +19,53 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
   constructor(
     private activatedRoute: ActivatedRoute,
     private itemService: ItemService,
-    private autoBidService: AutoBidService
+    private autoBidService: AutoBidService,
+    private messageService: MessagesService,
+    private dialog: MatDialog
   ) {
     // this.autoBidState = {AutoBidActivated:'Checked',AutoBidDeactivated:'Unchecked'}
     this.isChecked = localStorage.getItem('autoBidState');
-
-    console.log(
-      autoBidService._currentBidPrice$.subscribe((state) => console.log(state))
-    );
   }
+  private readonly AUTOBID_AMOUNT = 1.5;
 
   ngDoCheck(): void {
-    // this.autoBid()
+    const budget = JSON.parse(localStorage.getItem('autobid')!);
     if (
-      this.isChecked 
+      this.isChecked &&
+      this.messageService._valueChange$ &&
+      budget['bid-amount'] >= 0
     ) {
-      console.log(this.isChecked);
-      
-      this.autoBidService._autoBidState$.subscribe((data) => {
-        const priceSet = parseInt(JSON.parse(localStorage.getItem('price')!));
-        console.log(priceSet);
-        
-        
-          this.autoBidService._currentBidPrice$.subscribe((price) => {
-            if (priceSet !== price.price) {
-              const newPrice = price.price + 1.5;
-              this.itemService
-                .autoBidItem(data.text, newPrice)
-                .subscribe((data) => console.log(data));
-            }
-          });
-        
-      });}
+      this.messageService._valueChange$.subscribe((value) => {
+        const autoBid = value.price + this.AUTOBID_AMOUNT;
+        budget['bid-amount'] -= this.AUTOBID_AMOUNT;
 
+        this.messageService.setCurrentBudget(budget['bid-amount']);
+
+        this.messageService._budget$.subscribe((budget) => {
+          const minimunBudget = JSON.parse(
+            localStorage.getItem('minimunBudget')!
+          );
+
+          if (budget <= minimunBudget) {
+            this.messageService.setMessage(
+              'The budget has reached bellow 90%, you are adviced to turn off auto-bidding or increase your budget.'
+            );
+
+            this.dialog.open(MessageComponent, {
+              data: { currentBudget: minimunBudget },
+            });
+          }
+        });
+
+        localStorage.setItem('autobid', JSON.stringify(budget));
+        const id = this.activatedRoute.snapshot.paramMap.get('itemID')!;
+        this.itemService
+          .updateItem(autoBid, id)
+          .subscribe((data: any) =>
+            console.log('The value changed by auto bid', data)
+          );
+      });
+    }
   }
 
   items: any;
@@ -62,46 +80,30 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
       .updateItem(new_price, id)
       .subscribe((data: any) => console.log(data));
 
+    this.messageService.setValue(new_price);
+
     localStorage.setItem('price', JSON.stringify(new_price));
   }
 
   autoBid() {
-    if (
-      this.isChecked 
-    ) {
+    if (this.isChecked) {
       console.log(this.isChecked);
-      
+
       this.autoBidService._autoBidState$.subscribe((data) => {
         const priceSet = parseInt(JSON.parse(localStorage.getItem('price')!));
         console.log(priceSet);
-        
-        
-          this.autoBidService._currentBidPrice$.subscribe((price) => {
-            if (priceSet !== price.price) {
-              const newPrice = price.price + 1.5;
-              this.itemService
-                .autoBidItem(data.text, newPrice)
-                .subscribe((data) => console.log(data));
-            }
-          });
-        
+
+        this.autoBidService._currentBidPrice$.subscribe((price) => {
+          if (priceSet !== price.price) {
+            const newPrice = price.price + 1.5;
+            this.itemService
+              .autoBidItem(data.text, newPrice)
+              .subscribe((data) => console.log(data));
+          }
+        });
       });
-
-      //   price.price += 1.5;
-      //   this.autoBidService.setBidPrice(price.price)
-      //   const autoBidDetails = JSON.parse(localStorage.getItem('autoBid')!);
-      //   autoBidDetails['bid-amount'] -= 1.5;
-
-      //   console.log(price.price);
-
-      //   console.log(autoBidDetails);
-
-      //   localStorage.setItem('autoBid', autoBidDetails)
-      //     return price.price
-      // });
     }
   }
-
   getItem(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('itemID')!;
 
@@ -124,7 +126,7 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
   ngOnInit(): void {
     this.getItems();
     this.getItem();
-    this.autoBid()
-    // this.autoBid();
+    this.autoBid();
+    console.log(localStorage.getItem('autobid'));
   }
 }

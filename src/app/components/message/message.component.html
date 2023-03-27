@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Alert</h1>
+<mat-dialog-content>
+  <h2 >Amount left: {{ data.currentBudget | currency }}</h2>
+  <p>{{ message }}</p>
+</mat-dialog-content>
+<mat-dialog-actions class="actions">
+ <button type="button" mat-dialog-close="true" id="#mat-button-no">Close</button>
+</mat-dialog-actions>
