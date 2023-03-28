@@ -16,9 +16,12 @@
       <span class="item-content">
         <div class="content">
           <span>
-            <h1>Product NO#: {{ allItems.indexOf(item) + 1}}</h1>
+            <!-- <h1>Product NO#: {{ allItems.indexOf(item) + 1}}</h1>
             <h2>Item Price:$ {{ item.startBid }}</h2>
-            <p>{{ item.description.slice(0, 250) }}...</p>
+            <p>{{ item.description.slice(0, 250) }}...</p> -->
+            <h1>Item Number#: <span id="value">{{ allItems.indexOf(item) + 1 }}</span> </h1>
+            <h3>Item Name: <span id="value">{{ item.name }}</span></h3>
+            <h4>Current bid pirce: <span id="value">${{ item.startBid }}</span></h4>
           </span>
           <span class="buttons">
             <button id="edit" type="button" routerLink="/edit/{{item._id}}">Edit</button>

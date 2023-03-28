@@ -55,8 +55,11 @@ export class AutoBiddingComponent implements OnInit {
   getItem(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('id')!;
     const values = JSON.parse(localStorage.getItem('autobid')!);
-    (this.currentAmountBudget = values['bid-amount']),
-      (this.currentPercentageSet = values['bid-alert']);
+    if(values){
+
+      (this.currentAmountBudget = values['bid-amount']!),
+        (this.currentPercentageSet = values['bid-alert']!);
+    }
     this.itemService
       .getItem(id)
       .subscribe((item) => (this.selectedItem = item));
