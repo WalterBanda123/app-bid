@@ -13,9 +13,9 @@
           ngModel
           class="inputs"
           type="text"
-          name="itemName"
-          id="itemName"
-          #itemName="ngModel"
+          name="name"
+          id="name"
+          #name="ngModel"
           placeholder={{selectedItem.name}}
           [value]="selectedItem.name"
         />
@@ -25,9 +25,9 @@
           ngModel
           class="inputs"
           type="number"
-          name="startBid"
-          id="startBid"
-          #startBid="ngModel"
+          name="newBid"
+          id="newBid"
+          #newBid="ngModel"
           placeholder={{selectedItem.startBid}}
           [value]="selectedItem.startBid"
         />
@@ -66,14 +66,6 @@
           #category="ngModel"
           placeholder={{selectedItem.category}}
           [value]="selectedItem.category"
-        />
-        <label for="image">Pick image</label>
-        <input
-          required
-          type="file"
-          class="buttons"
-          accept="image/*"
-          placeholder="pick image"
         />
         <button type="submit" class="buttons" id="save" placeholder="Save">
           Save

@@ -24,12 +24,18 @@ export class AdminComponent implements OnInit, DoCheck {
     private router: Router,
     private dialog: MatDialog,
     private detecteChanges: ChangeDetectorRef
-  ) {}
+  ) {
+
+    
+  }
 
   // allItems:any= data;
   allItems?: any;
-
   ngDoCheck(): void {
+
+  }
+
+  reloadData() {
     this.itemService.getItems().subscribe((data) => {
       this.allItems = [...data.items];
       this.detecteChanges.detectChanges();
@@ -54,11 +60,17 @@ export class AdminComponent implements OnInit, DoCheck {
   addNewItem() {
     this.router.navigate(['add-item']);
     console.log('navigated to the add item page');
+    setTimeout(() => {
+      this.itemService.getItems().subscribe((data) => {
+        this.allItems = [...data.items];
+        this.detecteChanges.detectChanges();
+      });
+    }, 20000);
   }
 
   ngOnInit(): void {
     this.itemService.getItems().subscribe((data: any) => {
-      this.allItems =  data.items;
+      this.allItems = data.items;
       this.detecteChanges.detectChanges();
     });
   }

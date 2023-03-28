@@ -72,17 +72,17 @@ export class ItemService {
   }
 
   updateItem(
-    bidPrice: Number,
-    itemId: string,
-    category?: string,
-    bidTime?: string
+    id: string,
+    changes: {
+      name: string;
+      newBid: number;
+      description: string;
+      category: string;
+      bidTime: string;
+    }
   ): Observable<Item | any> {
     return this.http
-      .patch<Item>(this.serverUrl + `items/${itemId}`, {
-        newBid: bidPrice,
-        category,
-        bidTime,
-      })
+      .patch<Item | any>(this.serverUrl + `items/${id}`, changes)
       .pipe(catchError(this.handleError));
   }
 

@@ -60,7 +60,7 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
         localStorage.setItem('autobid', JSON.stringify(budget));
         const id = this.activatedRoute.snapshot.paramMap.get('itemID')!;
         this.itemService
-          .updateItem(autoBid, id)
+          .autoBidItem( id,autoBid)
           .subscribe((data: any) =>
             console.log('The value changed by auto bid', data)
           );
@@ -77,7 +77,7 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
     const id = this.activatedRoute.snapshot.paramMap.get('itemID')!;
     const new_price = Number(this.selectedItem?.startBid) + 10;
     this.itemService
-      .updateItem(new_price, id)
+      .autoBidItem(id ,new_price)
       .subscribe((data: any) => console.log(data));
 
     this.messageService.setValue(new_price);
