@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -20,7 +21,8 @@ export class EditItemComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private itemService: ItemService,
     private router: Router,
-    private detectChanges: ChangeDetectorRef
+    private detectChanges: ChangeDetectorRef,
+    private location:Location
   ) {}
 
   selectedItem: any;
@@ -51,6 +53,10 @@ export class EditItemComponent implements OnInit {
     } catch (error) {}
 
     this.router.navigate(['/admin']);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   ngOnInit(): void {

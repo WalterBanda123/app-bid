@@ -1,0 +1,67 @@
+.section input {
+  height: 40px;
+  width: 90%;
+  border-radius: 5px;
+  border: 0px;
+  background-color: #e6e6e6;
+  color: black;
+  padding-left: 20px;
+  align-self: center;
+}
+.section input::placeholder {
+  color: black;
+  font-weight: lighter;
+  font-size: 15px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  /* padding-left: 30px; */
+}
+
+.container {
+  width: 400px;
+  height: 400px;
+}
+
+.container .header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.container .header h2{
+  font-weight: bolder;
+}
+
+.section label {
+  color: gray;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 30px;
+}
+
+.buttons-container button{
+  border: 0px;
+  width: 100px;
+  height: 50px;
+  border-radius: 10px;
+}
+
+.buttons-container
+#button-save{
+  background-color: #2dd36f;
+  color: white;
+}
+#button-cancel{
+  background-color: black;
+  color: white;
+}

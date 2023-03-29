@@ -1,4 +1,10 @@
 <div class="container">
+  <div class="back-button">
+    <button type="button" id="back" (click)="goBack()">
+      <i class="material-icons" >arrow_back</i>
+      Back
+    </button>
+  </div>
   <div class="content">
     <form method="post" #addItemForm="ngForm" (ngSubmit)="addItem(addItemForm)">
       <div class="input-field">
@@ -27,7 +33,7 @@
           required
           ngModel
           class="inputs"
-          type="text"
+          type="datetime-local"
           name="bidTime"
           id="bidTime"
           #bidTime="ngModel"

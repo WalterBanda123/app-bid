@@ -23,6 +23,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { EditItemComponent } from './components/edit-item/edit-item.component';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
 import { MessageComponent } from './components/message/message.component';
+import { BiddingComponent } from './components/bidding/bidding.component';
+import { CountdownModule } from 'ngx-countdown';
 
 
 @NgModule({
@@ -41,6 +43,7 @@ import { MessageComponent } from './components/message/message.component';
     EditItemComponent,
     DeleteDialogComponent,
     MessageComponent,
+    BiddingComponent,
   ],
   entryComponents:[DialogComponent],
   imports: [
@@ -55,7 +58,8 @@ import { MessageComponent } from './components/message/message.component';
         tokenGetter: () => localStorage.getItem('authenticatedUser'),
       },
     }),
-    MatDialogModule
+    MatDialogModule,
+    CountdownModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -97,15 +97,16 @@ export class ItemService {
     return this.http.post<Item>(this.serverUrl + `items`, newItem);
   }
 
+
   deleteItem(itemId: string): Observable<Item> {
     return this.http
       .delete<Item>(this.serverUrl + `items/${itemId}`)
       .pipe(catchError(this.handleError));
   }
 
-  autoBidItem(itemId: string, newBidPrice: number): Observable<Item> {
+  autoBidItem(itemId: string, newBid: number): Observable<Item> {
     return this.http
-      .patch<Item>(this.serverUrl + `items/setBid/${itemId}`, { newBidPrice })
+      .patch<Item>(this.serverUrl + `items/setBid/${itemId}`, { newBid })
       .pipe(catchError(this.handleError));
   }
 }

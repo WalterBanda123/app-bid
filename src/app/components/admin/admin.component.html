@@ -4,7 +4,7 @@
     <button type="button" id="add-button" (click)="addNewItem()"><i class="material-icons">add</i> Add product</button>
   </div>
   <div class="items">
-    <div class="item" *ngFor="let item of allItems">
+    <div class="item" *ngFor="let item of listItems ">
       <span class="image">
         <img
           src="{{ item.image }}"

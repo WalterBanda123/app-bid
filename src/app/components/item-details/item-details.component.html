@@ -24,11 +24,11 @@
       </span>
       <span>
         <p>Available until</p>
-        <h3>{{ selectedItem.bidTime }}</h3>
+        <small>{{ countDownTime }}</small>
       </span>
     </div>
     <div class="bid-button">
-      <button (click)="bidItem()">Place a bid</button>
+      <button (click)="setBid()">Place a bid</button>
     </div>
     <div class="section-details">
       <p>

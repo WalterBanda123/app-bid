@@ -16,7 +16,7 @@ import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component'
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminComponent implements OnInit, DoCheck {
   constructor(
@@ -26,21 +26,19 @@ export class AdminComponent implements OnInit, DoCheck {
     private detecteChanges: ChangeDetectorRef
   ) {
 
-    
   }
 
   // allItems:any= data;
-  allItems?: any;
+  allItems?: any|[];
+  listItems: any
   ngDoCheck(): void {
 
   }
 
-  reloadData() {
-    this.itemService.getItems().subscribe((data) => {
-      this.allItems = [...data.items];
-      this.detecteChanges.detectChanges();
-    });
-  }
+
+
+
+
 
   deleteItem(itemId: string) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
@@ -49,10 +47,7 @@ export class AdminComponent implements OnInit, DoCheck {
 
     dialogRef.afterClosed().subscribe((state) => {
       if (state === 'true') {
-        this.itemService.getItems().subscribe((data) => {
-          this.allItems = [...data.items];
-          this.detecteChanges.detectChanges();
-        });
+
       }
     });
   }
@@ -60,18 +55,21 @@ export class AdminComponent implements OnInit, DoCheck {
   addNewItem() {
     this.router.navigate(['add-item']);
     console.log('navigated to the add item page');
-    setTimeout(() => {
-      this.itemService.getItems().subscribe((data) => {
-        this.allItems = [...data.items];
-        this.detecteChanges.detectChanges();
-      });
-    }, 20000);
+
+
+    this.itemService.getItems().subscribe((data) => {
+      this.allItems = data.items;
+      this.detecteChanges.detectChanges();
+    });
   }
 
   ngOnInit(): void {
     this.itemService.getItems().subscribe((data: any) => {
       this.allItems = data.items;
-      this.detecteChanges.detectChanges();
-    });
+      this.detecteChanges.detectChanges()
+      this.listItems = this.allItems
+      console.log(this.allItems);
+
+    })
   }
 }

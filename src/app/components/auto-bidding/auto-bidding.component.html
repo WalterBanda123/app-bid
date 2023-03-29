@@ -14,15 +14,14 @@
     </div>
     <form #autoBidding="ngForm" method="post" (ngSubmit)="settingBiddingAmount(autoBidding)">
       <div class="section">
-
         <label for="bid-amount">Auto Bid Budget</label>
-        <input 
-        type="number" 
-        name="bid-amount" 
-        id="bid-amount" 
+        <input
+        type="number"
+        name="bid-amount"
+        id="bid-amount"
         placeholder= "$ {{currentAmountBudget}}"
         ngModel
-        #currentAmount ="ngModel" 
+        #currentAmount ="ngModel"
         [value]="currentAmountBudget"
         >
       </div>
@@ -32,15 +31,15 @@
       </div>
       <label for="bid-alert">Percentage</label>
       <div class="section">
-          <input 
-          
-          type="number" 
-          name="bid-alert" 
-          id="bid-alert" 
+          <input
+
+          type="number"
+          name="bid-alert"
+          id="bid-alert"
           class="bit-alert"
           ngModel
-          #currentBidPercentage ="ngModel" 
-          placeholder= "{{currentPercentageSet}} %" 
+          #currentBidPercentage ="ngModel"
+          placeholder= "{{currentPercentageSet}} %"
           [value]="currentPercentageSet"
           />
       </div>

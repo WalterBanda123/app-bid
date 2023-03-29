@@ -14,54 +14,41 @@
     </select>
   </div>
   <div class="section">
-    <p>Minimal bid</p>
-    <input 
+    <p>Minimal bid: {{rangeValue.value| currency}}</p>
+    <input
       aria-valuetext="rangeValue.value"
       type="range"
       name="minimal-bit"
-      id="minimal-bit" 
-      min="0" 
-      
+      id="minimal-bit"
+      min="0"
       max="1000"
-      step="10" 
+      step="10"
       value="rangeValue.value"
       matTooltip = "rangeValue.value"
-      #rangeValue 
+      #rangeValue
       (change)="getRangeValue(rangeValue.value)"/>
   </div>
   <div class="section" >
     <p>Category</p>
       <ul >
         <li>
-          <input  
-          #furniture 
-          type="checkbox" 
-          name="furniture" 
-          id="furniture" 
+          <input
+          #furniture
+          type="checkbox"
+          name="furniture"
+          id="furniture"
           (change)="shareState(furniture.checked, furniture.id)"
           /> Furniture
         </li>
         <li>
-          <input 
-          type="checkbox" 
-          name="cutlery" 
+          <input
+          type="checkbox"
+          name="cutlery"
           #cutlery
-          id="cutlery"  
+          id="cutlery"
           (change)="shareState(cutlery.checked, cutlery.id)"
           /> Cutlery
         </li>
-        <!-- <li>
-          <input type="checkbox" name="category3" id="category3" /> Category 03
-        </li>
-        <li>
-          <input type="checkbox" name="category4" id="category4" /> Category 04
-        </li>
-        <li>
-          <input type="checkbox" name="category5" id="category5" /> Category 05
-        </li>
-        <li>
-          <input type="checkbox" name="category6" id="category6" /> Category 06
-        </li> -->
       </ul>
   </div>
 </nav>

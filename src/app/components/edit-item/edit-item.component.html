@@ -1,4 +1,10 @@
 <div class="container">
+  <div class="back-button">
+    <button type="button" id="back" (click)="goBack()">
+      <i class="material-icons" >arrow_back</i>
+      Back
+    </button>
+  </div>
   <div class="content">
     <form
       method="post"
@@ -40,7 +46,7 @@
           name="bidTime"
           id="bidTime"
           #bidTime="ngModel"
-          placeholder={{selectedItem.bitTime}}
+          placeholder={{selectedItem.bidTime}}
           [value]="selectedItem.bidTime"
         />
         <label for="description">Description</label>

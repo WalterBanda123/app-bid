@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="header" mat-dialog-title>
+    <h2>Place your Bid</h2>
+  </div>
+
+  <mat-dialog-content>
+    <!-- <p >
+      <small>
+        Note: Your bid amount should be at least more than the current bid price
+      </small>
+    </p> -->
+    <form action="post" #bidding="ngForm" (ngSubmit)="bidItemHandler(bidding)">
+      <div class="section">
+        <section>
+          <label for="currentBid"> Current bid price$: </label>
+          <h2>{{ currentItem.startBid | currency }}</h2>
+        </section>
+        <label for="bid-amount">Your bid </label>
+        <input
+          type="number"
+          name="newBid"
+          id="newBid"
+          ngModel
+          #newBid="ngModel"
+          required
+          placeholder="Place your bid"
+        />
+      </div>
+      <div class="buttons-container" mat-dialog-actions>
+        <button type="button" id="button-cancel" mat-dialog-close="false">
+          Cancel
+        </button>
+        <button type="submit" id="button-save" mat-dialog-close="true">
+          Save
+        </button>
+      </div>
+    </form>
+  </mat-dialog-content>
+</div>

@@ -11,17 +11,19 @@ export class DeleteDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private itemService: ItemService
-  ) {}
+  ) {
 
-  itemDetails: any;
-  deleteItemHandler() {
-    this.itemService.deleteItem(this.itemDetails._id).subscribe((result)=>
-    console.log(result)
-    );
+  }
+
+  itemDetails?: any;
+   deleteItemHandler() {
+    this.itemService
+      .deleteItem(this.itemDetails._id)
+      .subscribe((result) => console.log(result));
   }
 
   ngOnInit(): void {
-    this.itemService.getItem(this.data._id).subscribe((item: any) => {
+   this.itemService.getItem(this.data._id).subscribe((item: any) => {
       this.itemDetails = item;
     });
   }
