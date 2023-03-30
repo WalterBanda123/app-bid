@@ -20,19 +20,21 @@ export class AutoBiddingComponent implements OnInit {
     public autoBidService: AutoBidService,
     private biddingService: BiddingService,
     private location: Location,
-    private router: Router
-  ) {}
+    private router: Router,
+    private activeRoute:ActivatedRoute
+  ) {
 
+    this.userLoggedIn = JSON.parse(localStorage.getItem('loggedUser')!);
+    
+  }
+
+  userLoggedIn:any
   currentAmountBudget?: any;
   currentPercentageSet?: any;
   selectedItem?: Item;
   user: User | any;
 
-  ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem('loggedUser')!);
-    this.currentAmountBudget = this.user.amount;
-    this.currentPercentageSet = this.user.percentage;
-  }
+
 
   goBack(): void {
     this.location.back();
@@ -41,14 +43,18 @@ export class AutoBiddingComponent implements OnInit {
   createBudget(inputs: NgForm): void {
     console.log(inputs.value);
 
+    const id = this.activeRoute.snapshot.paramMap.get('itemID')!;
     if (inputs.invalid && inputs.untouched) {
       return console.log(`${inputs.value}: there are no values entered`);
     }
 
     if (inputs.valid && inputs.touched) {
       const fields = inputs.value;
+
+      console.log(this.userLoggedIn);
+
       this.itemService
-        .getUserAutobidBudget(this.user._id, {
+        .getUserAutobidBudget(this.userLoggedIn._id, {
           amount: fields['amount'],
           percentage: fields['percentage'],
         })
@@ -57,6 +63,17 @@ export class AutoBiddingComponent implements OnInit {
         });
     }
 
+
+
+    this.router.navigate([`/item/${id}`])
     this.location.back();
+  }
+
+  ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('loggedUser')!);
+    console.log(this.user, this.userLoggedIn);
+
+    this.currentAmountBudget = this.user.amount;
+    this.currentPercentageSet = this.user.percentage;
   }
 }

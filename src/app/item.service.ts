@@ -76,6 +76,7 @@ export class ItemService {
       .patch<User>(this.serverUrl + `users/config/${userId}`, budget)
       .pipe(catchError(this.handleError));
   }
+  
   getNewBudget(
     userId: string,
     budget: {

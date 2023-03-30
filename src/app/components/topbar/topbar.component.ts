@@ -23,7 +23,9 @@ export class TopbarComponent {
   LogOut(): void {
     this.dialog.open(DialogComponent);
     localStorage.removeItem('loggedUser');
-    // this.authService.logOut()
+    // this.authService.logOut()JSON.parse(localStorage.getItem('checkboxState')!);
+    localStorage.removeItem('checkboxState');
+    localStorage.removeItem('currentPrice');
   }
 
   getUserData() {
@@ -53,11 +55,10 @@ export class TopbarComponent {
         const latestUser = localStorage.getItem('loggedUser');
         // console.log(latestUser);
         if (latestUser) {
-         
           this.actualUserData = JSON.parse(latestUser);
         }
       }
     });
-    this.getUserData()
+    this.getUserData();
   }
 }

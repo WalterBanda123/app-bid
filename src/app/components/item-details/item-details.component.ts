@@ -56,19 +56,15 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
     // console.log(this.isChecked);
     // console.log('isActivated', this.isActived);
 
-    if (this.isActived.state === true) {
+    if (this.isActived && this.isActived.state === true) {
       this.itemService.getItem(this.isActived.text).subscribe((item) => {
-        console.log(item, this.userLoggedIn);
-
         autoBidService._currentBidPrice$.subscribe((price) => {
           if (this.bidAmount.price !== price.price) {
             item.startBid! += this.AUTOBID_AMOUNT;
             this.userLoggedIn.amount -= this.AUTOBID_AMOUNT;
             itemService
               .getNewBudget(this.userLoggedIn._id, this.userLoggedIn.amount)
-              .subscribe((result) => {
-                console.log(result);
-              });
+              .subscribe((result) => {});
             this.itemService
               .autoBidItem(this.isActived.text, item.startBid!)
               .subscribe((result) => {
@@ -100,14 +96,13 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
     // if (this.isActived.state === true) {
     this.biddingServing.getBidList().subscribe((list) => {
       const bidList = list.bidList;
-      console.log(bidList);
+      
 
       const bid = bidList.find(
         (bid: any) =>
           bid._itemId[0] === this.isActived.text &&
           bid._userId[0] === this.userLoggedIn._id
       );
-      console.log('bid found', bid);
 
       if (bid) {
         this.biddingServing.isBidActive(true, bid._id).subscribe((result) => {
