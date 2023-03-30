@@ -33,13 +33,15 @@
     <div class="section-details">
       <p>
         <input
+          [disabled]="!this.isAmountAndPercentageAvailable"
           type="checkbox"
-          name="autobidding"
+          name="isActive"
+          ngModel
           id="autobidding"
-          #autobidding
+          #isActive
           (click)="autoBid()"
-          [checked]="isChecked"
-          (change)="setAutoBidingHandler(autobidding.checked, selectedItem._id)"
+          [checked]="isActive"
+          (change)="setAutoBidingHandler(isActive.checked, selectedItem._id)"
         />Activate the
         <span class="link">
           <a routerLink="/bid/{{ selectedItem._id }}">auto-bidding</a>

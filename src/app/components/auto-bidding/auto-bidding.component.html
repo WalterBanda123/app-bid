@@ -1,9 +1,20 @@
-<div class="container" *ngIf="selectedItem">
-  <div class="sub-container">
-    <div class="heading">
+<div class="container">
+  <div class="heading">
+    <span class="close">
+      <button type="button" (click)="goBack()">
+        <i class="material-icons">arrow_back</i>Back</button
+      >
+
+    </span>
+  </div>
+  <div class="heading">
+    <span>
       <p>SETTINGS</p>
-      <h1>Configure the Auto-bidding</h1>
-    </div>
+      <h1>Configure the Auto-bidding</h1></span
+    >
+
+  </div>
+  <div class="sub-container">
     <div class="section">
       <h4>Maximum bid amount</h4>
       <p>
@@ -12,41 +23,51 @@
         Finibus Bonorum et Malorum" by Cicero are also
       </p>
     </div>
-    <form #autoBidding="ngForm" method="post" (ngSubmit)="settingBiddingAmount(autoBidding)">
+    <form
+      #autoBidding="ngForm"
+      method="post"
+      (ngSubmit)="createBudget(autoBidding)"
+    >
       <div class="section">
         <label for="bid-amount">Auto Bid Budget</label>
         <input
-        type="number"
-        name="bid-amount"
-        id="bid-amount"
-        placeholder= "$ {{currentAmountBudget}}"
-        ngModel
-        #currentAmount ="ngModel"
-        [value]="currentAmountBudget"
-        >
-      </div>
-      <div class="section">
-          <h4>Bid Alert notification</h4>
-          <p>Contrary to popular belief, Lorem Ipsum is not simply random text.</p>
-      </div>
-      <label for="bid-alert">Percentage</label>
-      <div class="section">
-          <input
-
           type="number"
-          name="bid-alert"
-          id="bid-alert"
+          name="amount"
+          id="amount"
+          placeholder="$ {{
+            currentAmountBudget ? currentAmountBudget : 'Amount'
+          }}"
+          ngModel
+          #amount ="ngModel"
+          required
+          [value]="currentAmountBudget"
+        />
+      </div>
+      <div class="section">
+        <h4>Bid Alert notification</h4>
+        <p>
+          Contrary to popular belief, Lorem Ipsum is not simply random text.
+        </p>
+      </div>
+      <div class="section">
+        <label for="bid-alert">Percentage</label>
+        <input
+          type="number"
+          name="percentage"
+          id="percentage"
           class="bit-alert"
           ngModel
-          #currentBidPercentage ="ngModel"
-          placeholder= "{{currentPercentageSet}} %"
+          #percentage="ngModel"
+          placeholder="{{
+            currentPercentageSet ? currentPercentageSet : 'Percentage'
+          }} %"
           [value]="currentPercentageSet"
-          />
+          required
+        />
       </div>
       <div class="section">
-          <button  type="submit">Save</button>
+        <button type="submit">Save</button>
       </div>
-
     </form>
   </div>
 </div>

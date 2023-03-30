@@ -44,32 +44,14 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
     private timerService: TimerService
   ) {
     // this.autoBidState = {AutoBidActivated:'Checked',AutoBidDeactivated:'Unchecked'}
-    this.isChecked = localStorage.getItem('autoBidState');
+
+    this.userLoggedIn = JSON.parse(localStorage.getItem('loggedUser')!);
+    this.isActived = JSON.parse(localStorage.getItem('checkboxState')!);
   }
-  // config: CountdownConfig = {
-  //   leftTime: 60 * 60 * 25,
-  //   formatDate: ({ date, formatStr }) => {
-  //     let duration = Number(date || 0);
-
-  //     return CountdownTimeUnits.reduce((current, [name, unit]) => {
-  //       if (current.indexOf(name) !== -1) {
-  //         const v = Math.floor(duration / unit);
-  //         duration -= v * unit;
-  //         return current.replace(new RegExp(`${name}+`, 'g'), (match: string) => {
-  //           return v.toString().padStart(match.length, '0');
-  //         });
-  //       }
-  //       return current;
-  //     }, formatStr); savingTimeLeft() {
-  // localStorage.setItem('timeLeft', JSON.stringify(this.config.leftTime));
-
-  //   },
-  // };
 
   private readonly AUTOBID_AMOUNT = 1.5;
 
   ngDoCheck(): void {
-
     this.countDownTime;
     const budget = JSON.parse(localStorage.getItem('autobid')!);
     if (
@@ -111,10 +93,15 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
   }
 
   items: any;
-  selectedItem: Item |any;
+  selectedItem: Item | any;
   isChecked?: any;
   checkedItemId: any;
   countDownTime: any;
+  userLoggedIn: any;
+  isAmountAndPercentageAvailable: any;
+  isActived: any;
+
+  isCheckedHandler(): void {}
 
   setBid(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('itemID')!;
@@ -160,6 +147,7 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
 
     this.itemService.getItem(id).subscribe((item: Item) => {
       this.selectedItem = item;
+
       this.updateCountDownTime(item.bidTime!);
       this.detectChanges.detectChanges();
       this.autoBidService.setBidPrice(this.selectedItem.startBid!);
@@ -187,5 +175,21 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
     this.getItems();
     this.getItem();
     this.autoBid();
+
+    if (
+      this.userLoggedIn &&
+      this.userLoggedIn.amount > 0 &&
+      this.userLoggedIn.percentage > 0
+    ) {
+      this.isAmountAndPercentageAvailable = true;
+    } else {
+      this.isAmountAndPercentageAvailable = false;
+    }
+    this.autoBidService._autoBidState$.subscribe((data) => {
+      this.isActived = data;
+      localStorage.setItem('checkboxState', JSON.stringify(data));
+    });
+
+    console.log(this.isActived);
   }
 }

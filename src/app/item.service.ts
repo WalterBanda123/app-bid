@@ -3,8 +3,8 @@ import {
   HttpHeaders,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 // import { cards } from './data/cards';
@@ -65,6 +65,20 @@ export class ItemService {
       .pipe(catchError(this.handleError));
   }
 
+  getUserAutobidBudget(
+    userId: string,
+    budget: {
+      percentage: number;
+      amount: number;
+    }
+  ): Observable<User> {
+    return this.http
+      .patch<User>(this.serverUrl + `users/config/${userId}`, budget)
+      .pipe(catchError(this.handleError));
+  }
+
+  
+
   getLoggedUser(userId: string): Observable<User> {
     return this.http
       .get<User>(this.serverUrl + `users/${userId}`)
@@ -96,7 +110,6 @@ export class ItemService {
   }): Observable<Item | any> {
     return this.http.post<Item>(this.serverUrl + `items`, newItem);
   }
-
 
   deleteItem(itemId: string): Observable<Item> {
     return this.http

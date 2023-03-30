@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemService } from 'src/app/item.service';
 import { Item } from 'src/app/data/item';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AutoBidService } from 'src/app/auto-bid.service';
 import { NgForm } from '@angular/forms';
 import { MessagesService } from 'src/app/messages.service';
 import { Location } from '@angular/common';
+import { User } from 'src/app/data/user';
+import { BiddingService } from 'src/app/bidding.service';
 
 @Component({
   selector: 'app-auto-bidding',
@@ -15,53 +17,46 @@ import { Location } from '@angular/common';
 export class AutoBiddingComponent implements OnInit {
   constructor(
     private itemService: ItemService,
-    private activatedRoute: ActivatedRoute,
     public autoBidService: AutoBidService,
-    private messageService: MessagesService,
-    private location: Location
+    private biddingService: BiddingService,
+    private location: Location,
+    private router: Router
   ) {}
 
-  currentAmountBudget: any;
-  currentPercentageSet: any;
+  currentAmountBudget?: any;
+  currentPercentageSet?: any;
+  selectedItem?: Item;
+  user: User | any;
 
-  settingBiddingAmount(value: NgForm) {
-    const fields = value.value;
+  ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('loggedUser')!);
+    this.currentAmountBudget = this.user.amount;
+    this.currentPercentageSet = this.user.percentage;
+  }
 
-    const floatValue = parseFloat(fields['bid-alert']) / 100;
-    console.log(floatValue);
-
-    const maximumValue = parseFloat(fields['bid-amount']) * floatValue;
-    const minimunBudget = parseFloat(fields['bid-amount']) - maximumValue;
-
-    console.log(minimunBudget);
-
-    localStorage.setItem('minimunBudget', JSON.stringify(minimunBudget));
-
-    this.messageService.setBiddingBudgetAndPercentage(
-      fields['bid-amount'],
-      fields['bid-alert']
-    );
-    localStorage.setItem('autobid', JSON.stringify(fields));
-    console.log(fields['bid-amount'], fields['bid-alert']);
+  goBack(): void {
     this.location.back();
   }
 
-  ngOnInit(): void {
-    this.getItem();
-  }
+  createBudget(inputs: NgForm): void {
+    console.log(inputs.value);
 
-  selectedItem?: Item;
-
-  getItem(): void {
-    const id = this.activatedRoute.snapshot.paramMap.get('id')!;
-    const values = JSON.parse(localStorage.getItem('autobid')!);
-    if(values){
-
-      (this.currentAmountBudget = values['bid-amount']!),
-        (this.currentPercentageSet = values['bid-alert']!);
+    if (inputs.invalid && inputs.untouched) {
+      return console.log(`${inputs.value}: there are no values entered`);
     }
-    this.itemService
-      .getItem(id)
-      .subscribe((item) => (this.selectedItem = item));
+
+    if (inputs.valid && inputs.touched) {
+      const fields = inputs.value;
+      this.itemService
+        .getUserAutobidBudget(this.user._id, {
+          amount: fields['amount'],
+          percentage: fields['percentage'],
+        })
+        .subscribe((result) => {
+          console.log(result);
+        });
+    }
+
+    this.location.back();
   }
 }
