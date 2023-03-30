@@ -36,11 +36,11 @@
           [disabled]="!this.isAmountAndPercentageAvailable"
           type="checkbox"
           name="isActive"
-          ngModel
+          [(ngModel)] = "isActived.state"
           id="autobidding"
           #isActive
-          (click)="autoBid()"
-          [checked]="isActive"
+        
+          (click)="isCheckedHandler()"
           (change)="setAutoBidingHandler(isActive.checked, selectedItem._id)"
         />Activate the
         <span class="link">

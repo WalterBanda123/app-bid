@@ -67,8 +67,8 @@ export class AdminComponent implements OnInit, DoCheck {
     this.itemService.getItems().subscribe((data: any) => {
       this.allItems = data.items;
       this.detecteChanges.detectChanges()
-      this.listItems = this.allItems
-      console.log(this.allItems);
+      // this.listItems = this.allItems
+      // console.log(this.allItems);
 
     })
   }

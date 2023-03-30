@@ -17,6 +17,7 @@ import { MessagesService } from 'src/app/messages.service';
 import { MessageComponent } from '../message/message.component';
 import { BiddingComponent } from '../bidding/bidding.component';
 import { TimerService } from 'src/app/timer.service';
+import { BiddingService } from 'src/app/bidding.service';
 
 const CountdownTimeUnits: Array<[string, number]> = [
   ['Y', 1000 * 60 * 60 * 24 * 365], // years
@@ -41,67 +42,95 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
     private messageService: MessagesService,
     private dialog: MatDialog,
     private detectChanges: ChangeDetectorRef,
-    private timerService: TimerService
+    private timerService: TimerService,
+    private biddingServing: BiddingService
   ) {
     // this.autoBidState = {AutoBidActivated:'Checked',AutoBidDeactivated:'Unchecked'}
 
     this.userLoggedIn = JSON.parse(localStorage.getItem('loggedUser')!);
+
     this.isActived = JSON.parse(localStorage.getItem('checkboxState')!);
-  }
+    this.bidAmount = JSON.parse(localStorage.getItem('currentPrice')!);
 
-  private readonly AUTOBID_AMOUNT = 1.5;
+    // if(this.isActived && de)
+    // console.log(this.isChecked);
+    // console.log('isActivated', this.isActived);
 
-  ngDoCheck(): void {
-    this.countDownTime;
-    const budget = JSON.parse(localStorage.getItem('autobid')!);
-    if (
-      this.isChecked &&
-      this.messageService._valueChange$ &&
-      budget['bid-amount'] >= 0
-    ) {
-      this.messageService._valueChange$.subscribe((value) => {
-        const autoBid = value.price + this.AUTOBID_AMOUNT;
-        budget['bid-amount'] -= this.AUTOBID_AMOUNT;
+    if (this.isActived.state === true) {
+      this.itemService.getItem(this.isActived.text).subscribe((item) => {
+        console.log(item, this.userLoggedIn);
 
-        this.messageService.setCurrentBudget(budget['bid-amount']);
-
-        this.messageService._budget$.subscribe((budget) => {
-          const minimunBudget = JSON.parse(
-            localStorage.getItem('minimunBudget')!
-          );
-
-          if (budget <= minimunBudget) {
-            this.messageService.setMessage(
-              'The budget has reached below 90%, you are adviced to turn off auto-bidding or increase your budget.'
-            );
-
-            this.dialog.open(MessageComponent, {
-              data: { currentBudget: minimunBudget },
-            });
+        autoBidService._currentBidPrice$.subscribe((price) => {
+          if (this.bidAmount.price !== price.price) {
+            item.startBid! += this.AUTOBID_AMOUNT;
+            this.userLoggedIn.amount -= this.AUTOBID_AMOUNT;
+            itemService
+              .getNewBudget(this.userLoggedIn._id, this.userLoggedIn.amount)
+              .subscribe((result) => {
+                console.log(result);
+              });
+            this.itemService
+              .autoBidItem(this.isActived.text, item.startBid!)
+              .subscribe((result) => {
+                console.log(result);
+              });
           }
         });
 
-        localStorage.setItem('autobid', JSON.stringify(budget));
-        const id = this.activatedRoute.snapshot.paramMap.get('itemID')!;
-        this.itemService
-          .autoBidItem(id, autoBid)
-          .subscribe((data: any) =>
-            console.log('The value changed by auto bid', data)
-          );
+        this.detectChanges.detectChanges();
       });
     }
   }
 
+  private readonly AUTOBID_AMOUNT = 5;
+  ngDoCheck(): void {}
+
   items: any;
   selectedItem: Item | any;
   isChecked?: any;
-  checkedItemId: any;
+  checkBoxState: boolean = false;
   countDownTime: any;
   userLoggedIn: any;
   isAmountAndPercentageAvailable: any;
   isActived: any;
+  bidAmount: any;
+  userCheckBoxState: any;
 
-  isCheckedHandler(): void {}
+  isCheckedHandler(): void {
+    // if (this.isActived.state === true) {
+    this.biddingServing.getBidList().subscribe((list) => {
+      const bidList = list.bidList;
+      console.log(bidList);
+
+      const bid = bidList.find(
+        (bid: any) =>
+          bid._itemId[0] === this.isActived.text &&
+          bid._userId[0] === this.userLoggedIn._id
+      );
+      console.log('bid found', bid);
+
+      if (bid) {
+        this.biddingServing.isBidActive(true, bid._id).subscribe((result) => {
+          console.log(result);
+        });
+      } else if (bid === undefined) {
+        console.log('didnt find bid, creating new bid');
+
+        const newBid = {
+          isActive: this.isActived.state,
+          _itemId: this.isActived.text,
+          _userId: this.userLoggedIn._id,
+        };
+        console.log('new bid', newBid);
+
+        this.biddingServing.createNewBid(newBid).subscribe((result) => {
+          console.log(result.message);
+        });
+      } else {
+        return console.log(bid);
+      }
+    });
+  }
 
   setBid(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('itemID')!;
@@ -114,6 +143,7 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
         if (result === 'true') {
           this.itemService.getItem(id).subscribe((itemFetched) => {
             this.selectedItem = itemFetched;
+
             this.detectChanges.detectChanges();
           });
         } else {
@@ -145,17 +175,35 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
   getItem(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('itemID')!;
 
-    this.itemService.getItem(id).subscribe((item: Item) => {
+    this.itemService.getItem(id).subscribe((item: any) => {
       this.selectedItem = item;
+      this.autoBidService.setBidPrice(item.startBid!);
 
+      // this.biddingServing.getBidList().subscribe((list) => {
+      //   const bidList = list.bidList;
+      //   console.log(bidList);
+
+      //   const bid = bidList.find(
+      //     (bid: any) =>
+      //       bid._itemId[0] === item._id &&
+      //       bid._userId[0] === this.userLoggedIn._id
+      //   );
+
+      //   this.userCheckBoxState = bid.isActive;
+
+      //   console.log(this.bidAmount.price, this.selectedItem);
+      // });
       this.updateCountDownTime(item.bidTime!);
       this.detectChanges.detectChanges();
-      this.autoBidService.setBidPrice(this.selectedItem.startBid!);
     });
   }
 
   setAutoBidingHandler(state: boolean, text: string) {
     this.autoBidService.setAutoBid(state, text);
+    this.autoBidService._biddingAmount$.subscribe((amount) => {
+      this.bidAmount = amount;
+      console.log(amount);
+    });
   }
 
   getItems() {
@@ -175,6 +223,7 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
     this.getItems();
     this.getItem();
     this.autoBid();
+    this.isCheckedHandler();
 
     if (
       this.userLoggedIn &&
@@ -186,10 +235,14 @@ export class ItemDetailsComponent implements OnInit, DoCheck {
       this.isAmountAndPercentageAvailable = false;
     }
     this.autoBidService._autoBidState$.subscribe((data) => {
-      this.isActived = data;
+      // localStorage.setItem('autobidState', JSON.stringify(data));
+
       localStorage.setItem('checkboxState', JSON.stringify(data));
+      console.log('activated state', this.isActived);
     });
 
-    console.log(this.isActived);
+    this.autoBidService._currentBidPrice$.subscribe((price) => {
+      localStorage.setItem('currentPrice', JSON.stringify(price));
+    });
   }
 }

@@ -1,10 +1,13 @@
-<div class="container">
-  <div class="back-button">
+<app-topbar></app-topbar>
+<div class="heading">
+  <span class="close">
     <button type="button" id="back" (click)="goBack()">
-      <i class="material-icons" >arrow_back</i>
+      <i class="material-icons">arrow_back</i>
       Back
     </button>
-  </div>
+  </span>
+</div>
+<div class="container">
   <div class="content">
     <form
       method="post"
@@ -12,7 +15,7 @@
       (ngSubmit)="updatedItem(editItemForm)"
     >
       <div class="input-field">
-        <h2>{{selectedItem.name}}</h2>
+        <h2>Edit this Item{{ selectedItem.name }}</h2>
         <label for="Item name">Item Name</label>
         <input
           required
@@ -22,7 +25,7 @@
           name="name"
           id="name"
           #name="ngModel"
-          placeholder={{selectedItem.name}}
+          placeholder="{{ selectedItem.name }}"
           [value]="selectedItem.name"
         />
         <label for="startBid">Starting bid</label>
@@ -34,10 +37,10 @@
           name="newBid"
           id="newBid"
           #newBid="ngModel"
-          placeholder={{selectedItem.startBid}}
+          placeholder="{{ selectedItem.startBid }}"
           [value]="selectedItem.startBid"
         />
-        <label for="bidTime">Bid time</label>
+        <label for="bidTime">Expires On</label>
         <input
           required
           ngModel
@@ -46,7 +49,7 @@
           name="bidTime"
           id="bidTime"
           #bidTime="ngModel"
-          placeholder={{selectedItem.bidTime}}
+          placeholder="{{ selectedItem.bidTime }}"
           [value]="selectedItem.bidTime"
         />
         <label for="description">Description</label>
@@ -58,7 +61,7 @@
           name="description"
           id="description"
           #description="ngModel"
-          placeholder={{selectedItem.description}}
+          placeholder="{{ selectedItem.description }}"
           [value]="selectedItem.description"
         ></textarea>
         <label for="category">Category</label>
@@ -70,7 +73,7 @@
           name="category"
           id="category"
           #category="ngModel"
-          placeholder={{selectedItem.category}}
+          placeholder="{{ selectedItem.category }}"
           [value]="selectedItem.category"
         />
         <button type="submit" class="buttons" id="save" placeholder="Save">

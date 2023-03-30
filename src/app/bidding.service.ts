@@ -54,8 +54,19 @@ export class BiddingService {
   }
 
   getExistingBids(itemId: string, userId: string): Observable<any> {
-    return this.http.get<any>(
-      this.serverUrl + `autobid/exist`, 
-    );
+    const params = { _itemId: itemId, _userId: userId };
+    return this.http.get<any>(this.serverUrl + `autobid/exist`, {
+      params: params,
+    });
+  }
+
+  createNewBid(newBid: {
+    isActive: boolean;
+    _itemId: string;
+    _userId: string;
+  }): Observable<any> {
+    return this.http
+      .post<any>(this.serverUrl + `autobid`, newBid)
+      .pipe(catchError(this.handleError));
   }
 }

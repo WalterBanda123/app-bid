@@ -76,8 +76,18 @@ export class ItemService {
       .patch<User>(this.serverUrl + `users/config/${userId}`, budget)
       .pipe(catchError(this.handleError));
   }
+  getNewBudget(
+    userId: string,
+    budget: {
+      amount: number;
+    }
+  ): Observable<User> {
+    return this.http
+      .patch<User>(this.serverUrl + `user/new-badget/${userId}`, budget)
+      .pipe(catchError(this.handleError));
+  }
 
-  
+
 
   getLoggedUser(userId: string): Observable<User> {
     return this.http
